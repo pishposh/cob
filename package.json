@@ -1,0 +1,24 @@
+{
+  "name": "cob",
+  "version": "1.0.0",
+  "private": true,
+  "description": "coroutine utils for tiger prototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tarobomb/cob"
+  },
+  "keywords": [],
+  "author": "Kentaro Kaji <kentaro.kaji@nytimes.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarobomb/cob/issues"
+  },
+  "homepage": "https://github.com/tarobomb/cob",
+  "dependencies": {
+    "bluebird": "^2.9.27"
+  }
+}

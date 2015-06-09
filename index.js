@@ -3,22 +3,22 @@
 let Promise = require('bluebird');
 
 // like tj's co(), I think?:
-function cob(gen) {
-    return cob.wrap(gen).call(this); // preserve 'this' through bluebird.coroutine
+module.exports = function (gen) {
+    return Promise.coroutine(gen).call(this); // allow binding 'this'
 }
 
 // wrap without preserving function.length:
-cob.wrap = function wrap(gen) {
+module.exports.wrap = function wrap(gen) {
     return Promise.coroutine(gen);
 };
 
-// wrap preserving function.length, but uglier and much slower:
-cob.awrap = function awrap(gen) {
-    return giveArity(cob.wrap(gen), gen.length);
+// wrap preserving function.length, but uglier and slower:
+module.exports.awrap = function awrap(gen) {
+    return giveArity(Promise.coroutine(gen), gen.length);
 };
 
 // wrap generator for use as Express middleware, sending any thrown errors to next(err):
-cob.middleware = function middleware(gen) {
+module.exports.middleware = function middleware(gen) {
     let cr = Promise.coroutine(gen);
     if (gen.length <= 3) { // because Express inspects the handler's signature
         return function (req, res, next) {
@@ -38,5 +38,3 @@ function giveArity(f, n) {
     for (let i = 0; i < n; i++) { arglist[i] = "arg" + i }
     return eval("'use strict'; (function (" + arglist.join(",") + ") { return f.apply(this, arguments); })");
 }
-
-module.exports = cob;
